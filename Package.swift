@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "StringsGenerator",
+    products: [
+        .executable(name: "strings-generator", targets: ["StringsGenerator"])
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
