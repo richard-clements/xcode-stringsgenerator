@@ -29,7 +29,7 @@ final class StringsGeneratorTests: XCTestCase {
         
         setUpCorrect()
         
-        let fooBinary = productsDirectory.appendingPathComponent("StringsGenerator")
+        let fooBinary = productsDirectory.appendingPathComponent("strings-generator")
         
         let process = Process()
         process.executableURL = fooBinary
@@ -117,7 +117,7 @@ final class StringsGeneratorTests: XCTestCase {
         
         setUpFailTooManyArguments()
         
-        let fooBinary = productsDirectory.appendingPathComponent("StringsGenerator")
+        let fooBinary = productsDirectory.appendingPathComponent("strings-generator")
         
         let process = Process()
         process.executableURL = fooBinary
@@ -150,7 +150,7 @@ final class StringsGeneratorTests: XCTestCase {
         
         setUpFailNotEnoughArguments()
         
-        let fooBinary = productsDirectory.appendingPathComponent("StringsGenerator")
+        let fooBinary = productsDirectory.appendingPathComponent("strings-generator")
         
         let process = Process()
         process.executableURL = fooBinary
