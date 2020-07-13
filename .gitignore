@@ -1,3 +1,4 @@
 .build/
 .swiftpm/
 */xcuserdata/*
+StringsGenerator.xcodeproj/project.xcworkspace/xcuserdata/
