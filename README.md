@@ -1,3 +1,5 @@
+![Swift](https://github.com/ecotricity/xcode-strings-generator/workflows/Swift/badge.svg)
+
 # StringsGenerator
 
 A build tool for Xcode to create a swift api for any strings that are in Localizable.strings or Localizable.stringsdict.
