@@ -15,38 +15,52 @@ public final class StringsGenerator {
         self.arguments = arguments
     }
     
+    private func inputFiles() -> [String] {
+        let fileCount = Int(ProcessInfo.processInfo.environment["SCRIPT_INPUT_FILE_COUNT"] ?? "0") ?? 0
+        guard fileCount > 0 else {
+            return []
+        }
+        return (0 ..< fileCount).compactMap {
+            ProcessInfo.processInfo.environment["SCRIPT_INPUT_FILE_\($0)"]
+        }
+    }
+    
+    private func outputFiles() -> [String] {
+        let fileCount = Int(ProcessInfo.processInfo.environment["SCRIPT_OUTPUT_FILE_COUNT"] ?? "0") ?? 0
+        guard fileCount > 0 else {
+            return []
+        }
+        return (0 ..< fileCount).compactMap {
+            ProcessInfo.processInfo.environment["SCRIPT_OUTPUT_FILE_\($0)"]
+        }
+    }
+    
+    private func fetchArgument(_ argument: String, from arguments: [String]) -> String? {
+        var previousArgument: String?
+        for argumentValue in arguments {
+            if previousArgument == "-\(argument)" {
+                return argumentValue
+            }
+            previousArgument = argumentValue
+        }
+        return nil
+    }
+    
     /**
      To be called after initialisation.
      */
     public func run() throws {
-        var stringsFilePath: String?
-        var dictFilePath: String?
-        var outputFilePath: String?
+        let inputFiles = self.inputFiles()
+        let outputFiles = self.outputFiles()
         
-        var previousArgument: String?
+        let stringsFilePath = inputFiles.first { $0.hasSuffix(".strings") }
+        let dictFilePath = inputFiles.first { $0.hasSuffix(".stringsdict") }
         
-        for argument in arguments {
-            if argument.hasSuffix(".strings") {
-                stringsFilePath = argument
-            } else if argument.hasSuffix(".stringsdict") {
-                dictFilePath = argument
-            } else if previousArgument == "-o" {
-                outputFilePath = argument
-            } else if previousArgument == "-m" {
-                message = argument
-            }
-            previousArgument = argument
-        }
-        
-        guard let ofp = outputFilePath else {
+        guard let outputFilePath = outputFiles.first(where: { $0.hasSuffix(".swift") }) else {
             throw NSError(domain: "No output file declared", code: -999, userInfo: nil)
         }
         
-        guard stringsFilePath != nil || dictFilePath != nil else {
-            return
-        }
-        
-        try generateFile(stringsFilePath: stringsFilePath, dictFilePath: dictFilePath, outputFilePath: ofp, showDebug: arguments.contains("--debug"))
+        try generateFile(stringsFilePath: stringsFilePath, dictFilePath: dictFilePath, outputFilePath: outputFilePath, message: fetchArgument("m", from: arguments), showDebug: arguments.contains("--debug"))
     }
     
     /**
@@ -67,7 +81,7 @@ public final class StringsGenerator {
         }
     }
     
-    func generateFile(stringsFilePath: String?, dictFilePath: String?, outputFilePath: String, showDebug: Bool) throws {
+    func generateFile(stringsFilePath: String?, dictFilePath: String?, outputFilePath: String, message: String?, showDebug: Bool) throws {
         var stringsPlist: [String: String] = [:]
         var plist: [String: Any] = [:]
 
@@ -116,11 +130,9 @@ public final class StringsGenerator {
         let graph = try StringParser(strings: string).parse()
         let fileContents = try graph.fileContents()
         
-        let message = self.message == nil ? "" : "\n\n\(self.message!)"
-        
         let fullString = """
         /**
-        AUTO GENERATED STRINGS FILE\(message)
+        AUTO GENERATED STRINGS FILE\(message.map { "\n\n\($0)" } ?? "")
         */
         import Foundation
         

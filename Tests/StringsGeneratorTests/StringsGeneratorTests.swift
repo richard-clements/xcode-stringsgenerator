@@ -34,13 +34,16 @@ final class StringsGeneratorTests: XCTestCase {
         let process = Process()
         process.executableURL = fooBinary
         process.arguments = [
-            localizedStringFilePath,
-            localizedDictFilePath,
-            "-o",
-            swiftFilePath,
             "-m",
             "Test Message"
         ]
+        process.environment = [:]
+        process.environment?["SCRIPT_INPUT_FILE_COUNT"] = "2"
+        process.environment?["SCRIPT_INPUT_FILE_0"] = localizedStringFilePath
+        process.environment?["SCRIPT_INPUT_FILE_1"] = localizedDictFilePath
+        process.environment?["SCRIPT_OUTPUT_FILE_COUNT"] = "1"
+        process.environment?["SCRIPT_OUTPUT_FILE_0"] = swiftFilePath
+        
         
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -122,13 +125,15 @@ final class StringsGeneratorTests: XCTestCase {
         let process = Process()
         process.executableURL = fooBinary
         process.arguments = [
-            localizedStringFilePath,
-            localizedDictFilePath,
-            "-o",
-            swiftFilePath,
             "-m",
             "Test Message"
         ]
+        process.environment = [:]
+        process.environment?["SCRIPT_INPUT_FILE_COUNT"] = "2"
+        process.environment?["SCRIPT_INPUT_FILE_0"] = localizedStringFilePath
+        process.environment?["SCRIPT_INPUT_FILE_1"] = localizedDictFilePath
+        process.environment?["SCRIPT_OUTPUT_FILE_COUNT"] = "1"
+        process.environment?["SCRIPT_OUTPUT_FILE_0"] = swiftFilePath
         
         let pipe = Pipe()
         process.standardError = pipe
@@ -155,13 +160,15 @@ final class StringsGeneratorTests: XCTestCase {
         let process = Process()
         process.executableURL = fooBinary
         process.arguments = [
-            localizedStringFilePath,
-            localizedDictFilePath,
-            "-o",
-            swiftFilePath,
             "-m",
             "Test Message"
         ]
+        process.environment = [:]
+        process.environment?["SCRIPT_INPUT_FILE_COUNT"] = "2"
+        process.environment?["SCRIPT_INPUT_FILE_0"] = localizedStringFilePath
+        process.environment?["SCRIPT_INPUT_FILE_1"] = localizedDictFilePath
+        process.environment?["SCRIPT_OUTPUT_FILE_COUNT"] = "1"
+        process.environment?["SCRIPT_OUTPUT_FILE_0"] = swiftFilePath
         
         let pipe = Pipe()
         process.standardError = pipe
