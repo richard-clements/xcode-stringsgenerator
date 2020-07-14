@@ -25,9 +25,7 @@ struct SomeSection {
 
 ## Usage
 
-To run the strings generator, for input files `Localizable.strings`, `Localizable.stringsdict` and output file `Localizable.swift` use:
+Create a build script in the Build Phases tab on Xcode. Then add the `Localizable.strings` and `Localizable.stringsdict` files to the input file paths, and `Localizable.swift` to the output file paths.
 ```shell
-swift run strings-generator Localizable.strings Localizable.stringsdict -o Localizable.swift
+swift run strings-generator -m "Message to appear on the generated file"
 ```
-
-The command should be ran as a build script as early as possible in the Build Phases tasks.
