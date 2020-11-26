@@ -1,4 +1,4 @@
-![Swift](https://github.com/ecotricity/xcode-strings-generator/workflows/Swift/badge.svg)
+![Swift](https://github.com/richard-clements/xcode-strings-generator/workflows/Swift/badge.svg)
 
 # StringsGenerator
 
