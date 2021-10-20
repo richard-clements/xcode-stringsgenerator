@@ -11,12 +11,14 @@ class StringNode: CustomStringConvertible {
     
     unowned var parentNode: StringNode?
     let identifier: String
+    let buildForPackage: Bool
     var childNodes = [StringNode]()
     var strings = [StringName]()
     
-    init(parentNode: StringNode?, identifier: String) {
+    init(parentNode: StringNode?, identifier: String, buildForPackage: Bool) {
         self.parentNode = parentNode
         self.identifier = identifier
+        self.buildForPackage = buildForPackage
     }
     
     func fullPath() -> String {
@@ -48,7 +50,7 @@ class StringNode: CustomStringConvertible {
         
         let sortedStrings = strings.sorted { $0.identifier < $1.identifier }
         for string in sortedStrings {
-            contents += string.functionName(indentLevel: indentLevel + 1)
+            contents += string.functionName(indentLevel: indentLevel + 1, buildForPackage: buildForPackage)
             contents += "\n"
         }
         

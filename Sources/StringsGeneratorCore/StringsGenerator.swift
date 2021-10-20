@@ -60,7 +60,7 @@ public final class StringsGenerator {
             throw NSError(domain: "No output file declared", code: -999, userInfo: nil)
         }
         
-        try generateFile(stringsFilePath: stringsFilePath, dictFilePath: dictFilePath, outputFilePath: outputFilePath, message: fetchArgument("m", from: arguments), showDebug: arguments.contains("--debug"))
+        try generateFile(stringsFilePath: stringsFilePath, dictFilePath: dictFilePath, outputFilePath: outputFilePath, buildForPackage: arguments.contains("--build-for-package"), message: fetchArgument("m", from: arguments), showDebug: arguments.contains("--debug"))
     }
     
     /**
@@ -81,7 +81,7 @@ public final class StringsGenerator {
         }
     }
     
-    func generateFile(stringsFilePath: String?, dictFilePath: String?, outputFilePath: String, message: String?, showDebug: Bool) throws {
+    func generateFile(stringsFilePath: String?, dictFilePath: String?, outputFilePath: String, buildForPackage: Bool, message: String?, showDebug: Bool) throws {
         var stringsPlist: [String: String] = [:]
         var plist: [String: Any] = [:]
 
@@ -127,7 +127,7 @@ public final class StringsGenerator {
             string.removeLast()
         }
         
-        let graph = try StringParser(strings: string).parse()
+        let graph = try StringParser(strings: string, buildForPackage: buildForPackage).parse()
         let fileContents = try graph.fileContents()
         
         let fullString = """

@@ -10,9 +10,11 @@ import Foundation
 class StringParser {
     
     let strings: String
+    let buildForPackage: Bool
     
-    init(strings: String) {
+    init(strings: String, buildForPackage: Bool) {
         self.strings = strings
+        self.buildForPackage = buildForPackage
     }
     
     /**
@@ -61,7 +63,7 @@ class StringParser {
             } else {
                 var parentNode: StringNode! = graph.node(withIdentifier: itemSplit[0])
                 if parentNode == nil {
-                    parentNode = StringNode(parentNode: nil, identifier: itemSplit[0])
+                    parentNode = StringNode(parentNode: nil, identifier: itemSplit[0], buildForPackage: buildForPackage)
                     graph.nodes.append(parentNode)
                 }
                 
@@ -72,7 +74,7 @@ class StringParser {
                     let currentParentNode: StringNode! = currentNode
                     currentNode = currentParentNode.node(withIdentifier: subIdentifier)
                     if currentNode == nil {
-                        currentNode = StringNode(parentNode: currentParentNode, identifier: subIdentifier)
+                        currentNode = StringNode(parentNode: currentParentNode, identifier: subIdentifier, buildForPackage: buildForPackage)
                         currentParentNode.childNodes.append(currentNode)
                     }
                 }
@@ -82,6 +84,8 @@ class StringParser {
                 currentNode.addString(stringItem)
             }
         }
+        
+        graph.buildForPackage = buildForPackage
         
         return graph
     }

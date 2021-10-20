@@ -11,6 +11,7 @@ class StringGraph: CustomStringConvertible {
     
     var nodes = [StringNode]()
     var strings = [StringName]()
+    var buildForPackage: Bool = false
     
     func node(withIdentifier identifier: String) -> StringNode? {
         return nodes.first(where: { $0.identifier == identifier })
@@ -34,7 +35,7 @@ class StringGraph: CustomStringConvertible {
         
         let sortedStrings = strings.sorted { $0.identifier < $1.identifier }
         for string in sortedStrings {
-            contents += "\(string.functionName(indentLevel: 1))\n"
+            contents += "\(string.functionName(indentLevel: 1, buildForPackage: buildForPackage))\n"
         }
         
         let sortedNodes = nodes.sorted { $0.structName < $1.structName }

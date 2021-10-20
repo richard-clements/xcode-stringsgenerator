@@ -126,7 +126,7 @@ class StringName: CustomStringConvertible {
         return parentNode == nil ? identifier : "\(parentNode!.fullPath()).\(identifier)"
     }
     
-    func functionName(indentLevel: Int) -> String {
+    func functionName(indentLevel: Int, buildForPackage: Bool) -> String {
         let preIndent = Array(repeating: "    ", count: indentLevel).joined()
         
         let keySplit = identifier.split(separator: "_")
@@ -134,9 +134,16 @@ class StringName: CustomStringConvertible {
             return ""
         }
         
+        let localizedStringValue: String
+        if buildForPackage {
+            localizedStringValue = "NSLocalizedString(\"\(fullPath())\", bundle: .module, comment: \"\")"
+        } else {
+            localizedStringValue = "NSLocalizedString(\"\(fullPath())\", comment: \"\")"
+        }
+        
         switch arguments.count {
         case 0:
-            return "\(preIndent)public static let \(methodName) = NSLocalizedString(\"\(fullPath())\", comment: \"\")"
+            return "\(preIndent)public static let \(methodName) = \(localizedStringValue)"
         default:
             let functionArgumentNames: [NamedArgument] = (0 ..< arguments.count).map {
                 if $0 < argumentNames.count {
@@ -150,7 +157,7 @@ class StringName: CustomStringConvertible {
                 return "\($0.element.methodArguments): \(arguments[$0.offset])"
                 }.joined(separator: ", ")
             let stringArguments = functionArgumentNames.map { $0.stringArgument }.joined(separator: ", ")
-            return "\(preIndent)public static func \(methodName)(\(functionArguments)) -> String {\n\(preIndent)    return String(format: NSLocalizedString(\"\(fullPath())\", comment: \"\"), \(stringArguments))\n\(preIndent)}"
+            return "\(preIndent)public static func \(methodName)(\(functionArguments)) -> String {\n\(preIndent)    return String(format: \(localizedStringValue), \(stringArguments))\n\(preIndent)}"
         }
     }
     
