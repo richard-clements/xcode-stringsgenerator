@@ -56,7 +56,7 @@ class StringNode: CustomStringConvertible {
         
         let sortedNodes = childNodes.sorted { $0.structName < $1.structName }
         for node in sortedNodes {
-            contents += "\n\(preIndent)    struct \(node.structName) {\n"
+            contents += "\n\(preIndent)    public struct \(node.structName) {\n"
             contents += try node.structureContents(indentLevel: indentLevel + 1)
             contents += "\n\(preIndent)    }"
         }

@@ -30,7 +30,7 @@ class StringGraph: CustomStringConvertible {
     }
     
     func fileContents() throws -> String {
-        var contents = "struct LocalizedString {\n"
+        var contents = "public struct LocalizedString {\n"
         
         let sortedStrings = strings.sorted { $0.identifier < $1.identifier }
         for string in sortedStrings {
@@ -40,7 +40,7 @@ class StringGraph: CustomStringConvertible {
         let sortedNodes = nodes.sorted { $0.structName < $1.structName }
         for node in sortedNodes {
             let nodeName = node.structName
-            contents += "\n    struct \(nodeName) {\n"
+            contents += "\n    public struct \(nodeName) {\n"
             contents += "\(try node.structureContents(indentLevel: 1))\n"
             contents += "    }\n"
         }

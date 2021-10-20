@@ -62,47 +62,47 @@ final class StringsGeneratorTests: XCTestCase {
         */
         import Foundation
         
-        struct LocalizedString {
-            static func multilineArgumentText(_ arg0: String, _ arg1: String) -> String {
+        public struct LocalizedString {
+            public static func multilineArgumentText(_ arg0: String, _ arg1: String) -> String {
                 return String(format: NSLocalizedString("multilineArgumentText_:_:", comment: ""), arg0, arg1)
             }
-            static func multivariable(string arg0: String, int1 arg1: Int, int2 arg2: Int) -> String {
+            public static func multivariable(string arg0: String, int1 arg1: Int, int2 arg2: Int) -> String {
                 return String(format: NSLocalizedString("multivariable_string_int1_int2", comment: ""), arg0, arg1, arg2)
             }
-            static let staticText = NSLocalizedString("staticText", comment: "")
+            public static let staticText = NSLocalizedString("staticText", comment: "")
 
-            struct Section1 {
+            public struct Section1 {
 
-                struct Subsection1 {
-                    static let staticText = NSLocalizedString("section1.subsection1.staticText", comment: "")
+                public struct Subsection1 {
+                    public static let staticText = NSLocalizedString("section1.subsection1.staticText", comment: "")
 
                 }
-                struct Subsection2 {
-                    static func dynamicText(_ arg0: String, param2 arg1: Int) -> String {
+                public struct Subsection2 {
+                    public static func dynamicText(_ arg0: String, param2 arg1: Int) -> String {
                         return String(format: NSLocalizedString("section1.subsection2.dynamicText_:_param2", comment: ""), arg0, arg1)
                     }
 
                 }
             }
 
-            struct Section2 {
+            public struct Section2 {
 
-                struct Subsection1 {
-                    static func floatText(floatName arg0: Double) -> String {
+                public struct Subsection1 {
+                    public static func floatText(floatName arg0: Double) -> String {
                         return String(format: NSLocalizedString("section2.subsection1.floatText_floatName", comment: ""), arg0)
                     }
 
                 }
             }
 
-            struct Time {
-                static func days(_ arg0: Int) -> String {
+            public struct Time {
+                public static func days(_ arg0: Int) -> String {
                     return String(format: NSLocalizedString("time.days_:", comment: ""), arg0)
                 }
-                static func hours(_ arg0: Int) -> String {
+                public static func hours(_ arg0: Int) -> String {
                     return String(format: NSLocalizedString("time.hours_:", comment: ""), arg0)
                 }
-                static func minutes(_ arg0: Int) -> String {
+                public static func minutes(_ arg0: Int) -> String {
                     return String(format: NSLocalizedString("time.minutes_:", comment: ""), arg0)
                 }
 

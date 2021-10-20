@@ -136,7 +136,7 @@ class StringName: CustomStringConvertible {
         
         switch arguments.count {
         case 0:
-            return "\(preIndent)static let \(methodName) = NSLocalizedString(\"\(fullPath())\", comment: \"\")"
+            return "\(preIndent)public static let \(methodName) = NSLocalizedString(\"\(fullPath())\", comment: \"\")"
         default:
             let functionArgumentNames: [NamedArgument] = (0 ..< arguments.count).map {
                 if $0 < argumentNames.count {
@@ -150,7 +150,7 @@ class StringName: CustomStringConvertible {
                 return "\($0.element.methodArguments): \(arguments[$0.offset])"
                 }.joined(separator: ", ")
             let stringArguments = functionArgumentNames.map { $0.stringArgument }.joined(separator: ", ")
-            return "\(preIndent)static func \(methodName)(\(functionArguments)) -> String {\n\(preIndent)    return String(format: NSLocalizedString(\"\(fullPath())\", comment: \"\"), \(stringArguments))\n\(preIndent)}"
+            return "\(preIndent)public static func \(methodName)(\(functionArguments)) -> String {\n\(preIndent)    return String(format: NSLocalizedString(\"\(fullPath())\", comment: \"\"), \(stringArguments))\n\(preIndent)}"
         }
     }
     
